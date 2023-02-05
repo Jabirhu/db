@@ -107,18 +107,17 @@ WHERE D.DNO=E.DNO AND D.DNAME='ACCOUNTS';
 SELECT FNAME
 FROM EMPLOYEE E
 WHERE NOT EXISTS ((SELECT PNO
-FROM PROJECT
-WHERE DNO=3 AND PNO NOT IN (
-SELECT PNO
-FROM WORKS_ON W,EMPLOYEE E
-WHERE E.SSN=W.SSN)
-));
-
+                   FROM PROJECT
+                   WHERE DNO=5 AND PNO NOT IN (SELECT PNO
+                                               FROM WORKS_ON W,EMPLOYEE E
+                                               WHERE E.SSN=W.SSN)
+                  ));
+   
 -- QUERY 5
 SELECT DNO,COUNT(SSN)
 FROM EMPLOYEE 
 WHERE SALARY>600000 AND DNO IN(SELECT DNO
-								FROM EMPLOYEE
+				FROM EMPLOYEE
                                 GROUP BY DNO
                                 HAVING COUNT(SSN)>5)
-GROUP BY DNO;
+                                GROUP BY DNO;
